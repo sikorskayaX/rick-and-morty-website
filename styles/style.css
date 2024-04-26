@@ -42,6 +42,16 @@ h6{
     text-align: center;
     color: rgba(33, 150, 243, 1);
 }
+
+.bold{
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 21px;
+    letter-spacing: 0.25px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+}
 a{
     font-family: Karla;
     font-size: 1.125rem;
@@ -121,18 +131,28 @@ main{
     justify-content: space-evenly;
 }
 
-.filters__name {
 
-    padding: 1rem 3rem;
-}
-
-
-.filters__name, .filters__select{
+.filters__name-character, .filters__name-location, .filters__name-episode,  .filters__select{
     width: 15rem;
     height: 3.5rem;
+    padding: 1rem;
     border-radius: 0.5rem;
     border: solid 1px rgba(0, 0, 0, 0.38);
 }
+
+.filters__name-character, .filters__select{
+    width: 15rem;
+}
+
+.filters__name-location{
+    width: 20.375rem;
+}
+
+.filters__name-episode{
+    width: 31.25rem;
+}
+
+
 
 .filters__select{
     padding: 1rem;
