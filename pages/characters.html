@@ -20,7 +20,7 @@
     </header>
     <main>
         <div class="filters">
-            <input type="text" class="filters__name-character" placeholder="Filter by name...">
+            <input type="text" id ="filter-name" class="filters__name-character placeholder="Filter by name...">
             <select name="species" id="species-select" class="filters__select">
                 <option value="">Species</option>
                 <option value="human">Human</option>
@@ -40,14 +40,13 @@
             </select>
         </div>
         <div class="characters" id="characters">
-            <div class="characters__container" >
-                <img src="../images/rick.png" alt="" class="characters__image">
+            <div class="characters__container" id="characters__container">
+                <img src="../images/rick.png" alt="Rick Sanchez" class="characters__image">
                 <h6 class="characters__name">Rick Sanchez</h6>
                 <p class="characters__species regular">Human</p>
-
             </div>
         </div>
-        <button class="medium">Load more</button>
+        <button class="medium" id="load">Load more</button>
     </main>
     <footer>
         <h3>Make with ❤️ for the MobProgramming team</h3>
