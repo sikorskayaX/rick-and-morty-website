@@ -236,10 +236,12 @@ main{
     width: 15rem;
 }
 
-.characters__text{
-    padding: 12px 16px;
+.characters__name {
+    padding: 1rem 0 0 1rem;
 }
-
+.characters__species{
+    padding: 0 0 1rem 1rem;
+}
 /*character*/
 .character__head{
     padding: 1% 0;
