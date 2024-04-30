@@ -7,6 +7,7 @@ let characters = [];
 const characterProperties = document.getElementById('character__properties');
 console.log(characterProperties)
 
+/*загружаем персонажей*/
 function loadCharacters(page = 1) {
     axios.get(`https://rickandmortyapi.com/api/character?page=${page}`)
         .then(function (response) {
@@ -19,6 +20,7 @@ function loadCharacters(page = 1) {
         
 }
 
+/*выводим персонажей на страницу*/
 function showCharacters(characters){
     characters.forEach(character => {
         const characterElement = document.createElement('a');
@@ -41,7 +43,7 @@ window.onload = () => {
   charactersContainer.style.display = 'flex';
 };
 
-
+/*load more*/
 loadButton.addEventListener('click', event => {
   console.log('LOAD MORE', event.type);
   charactersContainer.style.display = 'flex';
@@ -53,7 +55,7 @@ loadButton.addEventListener('click', event => {
 
 const filterInput = document.getElementById('filter-name');
 
-
+/*filter*/
 filterInput.addEventListener('input', () => {
     const filteredCharacters = characters.filter(character =>
       character.name.toLowerCase().includes(filterInput.value.toLowerCase())
