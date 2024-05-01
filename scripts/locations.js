@@ -50,16 +50,40 @@ loadButton.addEventListener('click', event => {
 
 
 const filterInput = document.getElementById('filter-name');
+const filterSelectType = document.getElementById('type-select');
+const filterSelectDimension = document.getElementById('dimension-select');
 
-/*filter*/
-filterInput.addEventListener('input', () => {
-    const filteredLocations = locations.filter(location =>
-      location.name.toLowerCase().includes(filterInput.value.toLowerCase())
+// Обработчики событий для каждого фильтра
+filterInput.addEventListener('input', applyFilters);
+filterSelectType.addEventListener('change', applyFilters);
+filterSelectDimension.addEventListener('change', applyFilters);
+
+// Функция для применения всех фильтров
+function applyFilters() {
+  let filteredLocations = locations;
+
+  const nameValue = filterInput.value.toLowerCase();
+  const typeValue = filterSelectType.value;
+  const dimensionValue = filterSelectDimension.value;
+
+  if (nameValue) {
+    filteredLocations = filteredLocations.filter(location =>
+      location.name.toLowerCase().includes(nameValue)
     );
-    locationsContainer.innerHTML = ''; 
-    showLocations(filteredLocations)
-  });
+  }
 
-  locationsContainer.addEventListener('click', () => {
-    console.log('click');
-  });
+  if (typeValue) {
+    filteredLocations = filteredLocations.filter(location =>
+      location.type === typeValue
+    );
+  }
+
+  if (dimensionValue) {
+    filteredLocations = filteredLocations.filter(location =>
+      location.dimension === dimensionValue
+    );
+  }
+
+  locationsContainer.innerHTML = '';
+  showLocations(filteredLocations);
+}
