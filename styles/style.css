@@ -333,6 +333,10 @@ main{
     background-color: rgba(250, 250, 250, 1);
 }
 
+
+.location__properties, .episodes__properties{
+    display: flex;
+}
 /*button*/
 
 button{
@@ -358,20 +362,21 @@ button:active{
     background: rgb(249, 252, 255);
 }
 
-/*planet*/
-.planet__about{
-    width: 55%;
+/*location*/
+.location, .episode{
+    display: flex;
+    flex-direction: column;
+}
+.location__about, .episode__about{
     padding: 1% 0;
 }
-.planet__properties{
+.location__properties, .episode__properties{
     padding: 5% 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
-.planet__dimension{
-    margin-right: 18%;
-}
+
 
 
 

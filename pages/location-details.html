@@ -18,7 +18,7 @@
         </nav>
     </header>
     <main>
-        <div class="planet">
+        <div class="location">
             <div class="character__head">
                 <a href="../pages/locations.html" class="character__go-back">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,14 +26,14 @@
                     </svg>
                     <h3>GO BACK</h3>
             </a>
-            <div class="planet__about">
+            <div class="location__about" id="location__about">
                 <p class="big">Earth (Replacement Dimension)</p>
-                <div class="planet__properties">
-                        <div class="planet__type">
+                <div class="location__properties">
+                        <div class="location__type">
                             <h4>Type</h4>
                             <p class="small">Planet</p>
                         </div>
-                        <div class="planet__dimension">
+                        <div class="location__dimension">
                             <h4>Dimension</h4>
                             <p class="small">Replacement Dimension</p>
                         </div>
@@ -41,68 +41,19 @@
             </div>
             </div>
         </div>
-        <h6>Cast</h6>
-        <div class="characters">
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
-            <div class="characters__container">
-                <img src="../images/rick.png" alt="" class="characters__image">
-                <div class="characters__text">
-                    <h6>Rick Sanchez</h6>
-                    <p class="regular">Human</p>
-                </div>
-            </div>
+        <h6>Residents</h6>
+        <div class="characters" id="characters">
+            <a href="../pages/character-details.html" class="characters__container" id="characters__container">
+                <img src="../images/rick.png" alt="Rick Sanchez" class="characters__image">
+                <h6 class="characters__name">Rick Sanchez</h6>
+                <p class="characters__species regular">Human</p>
+            </a>
         </div>
     </main>
     <footer>
         <h3>Make with ❤️ for the MobProgramming team</h3>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="../scripts/location-details.js"></script>
 </body>
 </html>

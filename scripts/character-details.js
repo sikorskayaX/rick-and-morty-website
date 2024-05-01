@@ -1,6 +1,5 @@
 ﻿const characterMain = document.getElementById('character__main');
 const selectedCharacterId = localStorage.getItem('selectedCharacterId');
-/*characterProperties.innerHTML = ''; */
 let episodes = [];
 
 function loadCharacter() {
@@ -68,7 +67,6 @@ function showCharacter(character, episodes) {
         { label: 'Species', value: character.species },
         { label: 'Origin', value: character.origin.name },
         { label: 'Type', value: character.type ? character.type.name : 'Unknown' }, 
-        { label: 'Location', value: character.location.name }
     ];
 
     properties.forEach(prop => {
@@ -77,6 +75,20 @@ function showCharacter(character, episodes) {
         characterInformations.appendChild(propertyTitle);
         characterInformations.appendChild(propertyValue);
     });
+
+    const characterLocationTitle = createElementWithText('h3', 'Location');
+    characterInformations.appendChild(characterLocationTitle);
+
+    const characterLocation = createElementWithText('div', '', 'character__episode');
+    characterLocation.textContent = character.location.name;
+    characterInformations.appendChild(characterLocation);
+
+    characterLocation.addEventListener('click', () => {
+        localStorage.setItem('selectedLocationId', parseInt(character.location.url.match(/\d+/)));
+        window.location.href = "../pages/location-details.html";
+    });
+
+
 
     episodes.forEach(episode => {
         const characterEpisode = createElementWithText('div', '', 'character__episode');

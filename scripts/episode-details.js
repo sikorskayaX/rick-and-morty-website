@@ -93,11 +93,14 @@ function showEpisode(episode, characters){
             <h6 class="characters__name">${character.name}</h6>
             <p class="characters__species regular">Вид: ${character.species}</p>
         `;
-        episodeContainer.appendChild(characterElement);
+        charactersContainer.appendChild(characterElement);
+        charactersContainer.style.display = 'flex';
         characterElement.addEventListener('click', () => {
           localStorage.setItem('selectedCharacterId', character.id);
       });
     });
+
+    episodeContainer.appendChild(charactersContainer);
 
 }
 

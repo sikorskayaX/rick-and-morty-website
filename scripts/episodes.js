@@ -58,7 +58,7 @@ const filterInput = document.getElementById('filter-name');
 /*filter*/
 filterInput.addEventListener('input', () => {
     const filteredEpisodes = episodes.filter(episode =>
-      episode.name.toLowerCase().includes(filterInput.value.toLowerCase())
+      episode.episode.toLowerCase().includes(filterInput.value.toLowerCase())
     );
     episodesContainer.innerHTML = ''; 
     showEpisodes(filteredEpisodes)

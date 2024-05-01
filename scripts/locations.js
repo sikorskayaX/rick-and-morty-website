@@ -57,7 +57,7 @@ filterInput.addEventListener('input', () => {
       location.name.toLowerCase().includes(filterInput.value.toLowerCase())
     );
     locationsContainer.innerHTML = ''; 
-    showlocations(filteredLocations)
+    showLocations(filteredLocations)
   });
 
   locationsContainer.addEventListener('click', () => {
