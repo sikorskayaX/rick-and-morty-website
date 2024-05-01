@@ -20,7 +20,7 @@
     </header>
     <main>
         <div class="filters">
-            <input type="text" class="filters__name-location" placeholder="Filter by name...">
+            <input type="text" class="filters__name-location" id="filter-name" placeholder="Filter by name...">
             <select name="type" id="type-select" class="filters__select">
                 <option value="">Type</option>
                 <option value="first">1</option>
@@ -32,7 +32,7 @@
                 <option value="second">2</option>
             </select>
         </div>
-        <div class="locations">
+        <div class="locations" id="locations">
             <div class="locations__container">
                 <h6>Earth (C-137)</h6>
                 <p class="regular">Planet</p>
@@ -82,10 +82,12 @@
                 <p class="regular">Planet</p>
             </div>
         </div>
-        <button class="medium">Load more</button>
+        <button class="medium" id="load">Load more</button>
     </main>
     <footer>
         <h3>Make with ❤️ for the MobProgramming team</h3>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="../scripts/locations.js"></script>
 </body>
 </html>

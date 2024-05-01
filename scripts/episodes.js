@@ -33,7 +33,7 @@ function showEpisodes(episodes){
         `;
         episodesContainer.appendChild(episodeElement);
         episodeElement.addEventListener('click', () => {
-          localStorage.setItem('selectedepisodeId', episode.id);
+          localStorage.setItem('selectedEpisodeId', episode.id);
       });
     });
 }
