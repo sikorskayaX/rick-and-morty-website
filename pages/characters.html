@@ -9,7 +9,7 @@
 <body>
     <header>
         <nav class="navigation">
-            <img src="../images/logo-black.png" alt="logo" class="navigation__logo">
+            <a href="../pages/characters.html"><img src="../images/logo-black.png" alt="logo" class="navigation__logo"></a>
             <ul class="navigation__list">
                 <li class="navigation__item"><a href="../pages/characters.html">Characters</a></li>
                 <li class="navigation__item"><a href="../pages/locations.html">Locations</a></li>
@@ -20,23 +20,32 @@
     </header>
     <main>
         <div class="filters">
-            <input type="text" id ="filter-name" class="filters__name-character placeholder="Filter by name...">
+            <input type="text" id ="filter-name" class="filters__name-character" placeholder="Filter by name...">
             <select name="species" id="species-select" class="filters__select">
                 <option value="">Species</option>
-                <option value="human">Human</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="hamster">Hamster</option>
+                <option value="Human">Human</option>
+                <option value="Alien">Alien</option>
+                <option value="Mythological Creature">Mythological Creature</option>
+                <option value="Humanoid">Humanoid</option>
+                <option value="Poopybutthole">Poopybutthole</option>
+                <option value="Disease">Disease</option>
+                <option value="Robot">Robot</option>
+                <option value="Cronenberg">Cronenberg</option>
+                <option value="Animal">Animal</option>
+                <option value="unknown">unknown</option>
             </select>
             <select name="gender" id="gender-select" class="filters__select">
                 <option value="">Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Genderless">Genderless</option>
+                <option value="Unknown">Unknown</option>
             </select>
             <select name="status" id="status-select" class="filters__select">
                 <option value="">Status</option>
-                <option value="human">Alive</option>
-                <option value="dog">Dead</option>
+                <option value="Alive">Alive</option>
+                <option value="Dead">Dead</option>
+                <option value="Unknown">Unknown</option>
             </select>
         </div>
         <div class="characters" id="characters">

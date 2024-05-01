@@ -29,7 +29,7 @@ function showCharacters(characters){
         characterElement.innerHTML = `
             <img class="characters__image" src="${character.image}" alt="${character.name}">
             <h6 class="characters__name">${character.name}</h6>
-            <p class="characters__species regular">Вид: ${character.species}</p>
+            <p class="characters__species regular">${character.species}</p>
         `;
         charactersContainer.appendChild(characterElement);
         characterElement.addEventListener('click', () => {
@@ -52,18 +52,51 @@ loadButton.addEventListener('click', event => {
 });
 
 
-
 const filterInput = document.getElementById('filter-name');
+const filterSelectSpecies = document.getElementById('species-select');
+const filterSelectGender = document.getElementById('gender-select');
+const filterSelectStatus = document.getElementById('status-select');
 
-/*filter*/
-filterInput.addEventListener('input', () => {
-    const filteredCharacters = characters.filter(character =>
-      character.name.toLowerCase().includes(filterInput.value.toLowerCase())
+// Обработчики событий для каждого фильтра
+filterInput.addEventListener('input', applyFilters);
+filterSelectSpecies.addEventListener('change', applyFilters);
+filterSelectGender.addEventListener('change', applyFilters);
+filterSelectStatus.addEventListener('change', applyFilters);
+
+// Функция для применения всех фильтров
+function applyFilters() {
+  let filteredCharacters = characters;
+
+  const nameValue = filterInput.value.toLowerCase();
+  const speciesValue = filterSelectSpecies.value;
+  const genderValue = filterSelectGender.value;
+  const statusValue = filterSelectStatus.value;
+
+  if (nameValue) {
+    filteredCharacters = filteredCharacters.filter(character =>
+      character.name.toLowerCase().includes(nameValue)
     );
-    charactersContainer.innerHTML = ''; 
-    showCharacters(filteredCharacters)
-  });
+  }
 
-  charactersContainer.addEventListener('click', () => {
-    console.log('click');
-  });
+  if (speciesValue) {
+    filteredCharacters = filteredCharacters.filter(character =>
+      character.species === speciesValue
+    );
+  }
+
+  if (genderValue) {
+    filteredCharacters = filteredCharacters.filter(character =>
+      character.gender === genderValue
+    );
+  }
+
+  if (statusValue) {
+    filteredCharacters = filteredCharacters.filter(character =>
+      character.status === statusValue
+    );
+  }
+
+  charactersContainer.innerHTML = '';
+  showCharacters(filteredCharacters);
+}
+

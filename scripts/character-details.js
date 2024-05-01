@@ -65,7 +65,6 @@ function showCharacter(character, episodes) {
         { label: 'Gender', value: character.gender },
         { label: 'Status', value: character.status },
         { label: 'Species', value: character.species },
-        { label: 'Origin', value: character.origin.name },
         { label: 'Type', value: character.type ? character.type.name : 'Unknown' }, 
     ];
 
@@ -84,10 +83,31 @@ function showCharacter(character, episodes) {
     characterInformations.appendChild(characterLocation);
 
     characterLocation.addEventListener('click', () => {
-        localStorage.setItem('selectedLocationId', parseInt(character.location.url.match(/\d+/)));
-        window.location.href = "../pages/location-details.html";
+        const locationID = character.location.url.match(/\d+/);
+        console.log(locationID);
+        if(locationID){
+            localStorage.setItem('selectedLocationId', parseInt(locationID));
+            window.location.href = "../pages/location-details.html";
+        }
+        else alert('Unknown location');
     });
 
+    const characterOriginTitle = createElementWithText('h3', 'Origin');
+    characterInformations.appendChild(characterOriginTitle);
+
+    const characterOrigin = createElementWithText('div', '', 'character__episode');
+    characterOrigin.textContent = character.origin.name;
+    characterInformations.appendChild(characterOrigin);
+
+    characterOrigin.addEventListener('click', () => {
+        const originID = character.origin.url.match(/\d+/);
+        console.log(originID);
+        if(originID){
+            localStorage.setItem('selectedLocationId', parseInt(originID));
+            window.location.href = "../pages/location-details.html";
+        }
+        else alert('Unknown origin');
+    });
 
 
     episodes.forEach(episode => {
