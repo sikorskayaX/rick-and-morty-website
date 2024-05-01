@@ -78,12 +78,20 @@ function showCharacter(character, episodes) {
         characterInformations.appendChild(propertyValue);
     });
 
-    episodes.map(episode => {
-        characterEpisodes.innerHTML += `
+    episodes.forEach(episode => {
+        const characterEpisode = createElementWithText('div', '', 'character__episode');
+        characterEpisode.innerHTML = `
         <p class="bold">${episode.episode}</p>
         <p class="small">${episode.name}</p>
         <p class="little">${episode.air_date}</p>
-    `;
+        `;
+        characterEpisodes.appendChild(characterEpisode);
+
+        characterEpisode.addEventListener('click', () => {
+            localStorage.setItem('selectedEpisodeId', episode.id);
+            window.location.href = "../pages/episode-details.html";
+            console.log(episode.id)
+        });
     });
 
     const characterProperties = createElementWithText('div', '', 'character__properties');

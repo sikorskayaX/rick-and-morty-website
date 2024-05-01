@@ -300,6 +300,15 @@ main{
 }
 
 
+.character__episode:hover{
+    background-color: rgba(0, 0, 0, 0.055);
+}
+
+
+.character__episode:active{
+    background-color: rgba(0, 0, 0, 0.178);
+}
+
 /*locations*/
 
 .locations{
