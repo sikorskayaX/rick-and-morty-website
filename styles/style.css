@@ -311,13 +311,13 @@ main{
 
 /*locations*/
 
-.locations{
+.locations, .episodes{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
 
-.locations__container{
+.locations__container, .episodes__container{
     width: 240px;
     height: 128px;
     display: flex;

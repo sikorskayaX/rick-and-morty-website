@@ -20,74 +20,21 @@
     </header>
     <main>
         <div class="filters">
-            <input type="text" class="filters__name-episode" placeholder="Filter by name or episode (ex. S01 or S01E02)">
+            <input type="text" class="filters__name-episode" id="filter-name" placeholder="Filter by name or episode (ex. S01 or S01E02)">
         </div>
-        <div class="locations">
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
-                <h6>Pilot</h6>
-                <p class="regular">December 2, 2013</p>
-                <p class="bold">SE01E01</p>
-            </div>
-            <div class="locations__container">
+        <div class="episodes" id = "episodes">
+            <div class="episodes__container">
                 <h6>Pilot</h6>
                 <p class="regular">December 2, 2013</p>
                 <p class="bold">SE01E01</p>
             </div>
         </div>
-        <button class="medium">Load more</button>
+        <button class="medium" id="load">Load more</button>
     </main>
     <footer>
         <h3>Make with ❤️ for the MobProgramming team</h3>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="../scripts/episodes.js"></script>
 </body>
 </html>
