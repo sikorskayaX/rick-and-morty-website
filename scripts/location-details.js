@@ -1,6 +1,7 @@
 ﻿const selectedLocationId = localStorage.getItem('selectedLocationId');
 const charactersContainer = document.getElementById('characters');
-charactersContainer.innerHTML = ''; 
+charactersContainer.innerHTML = '';
+const goBack = document.getElementById('back');
 let characters = [];
 
 // Загрузка информации о локации
@@ -8,63 +9,51 @@ async function loadLocation() {
     try {
         const response = await axios.get(`https://rickandmortyapi.com/api/location/${selectedLocationId}`);
         const location = response.data;
-        await loadResidents(location);
+        await loadResidents(location.residents);
+        showLocationDetails(location);
     } catch (error) {
         console.error(error);
     }
 }
 
 // Загрузка жителей локации
-async function loadResidents(location) {
+async function loadResidents(residentURLs) {
     try {
-        const residentPromises = location.residents.map(residentAPI => axios.get(residentAPI));
+        const residentPromises = residentURLs.map(url => axios.get(url));
         const responses = await Promise.all(residentPromises);
         characters = responses.map(response => response.data);
-        showLocation(location, characters);
+        showCharacters(characters);
     } catch (error) {
         console.error(error);
     }
 }
 
-// Отображение информации о локации и ее жителях
-function showLocation(location, characters) {
+// Отображение информации о локации
+function showLocationDetails(location) {
     const locationAbout = document.getElementById('location__about');
     locationAbout.classList.add('location__about');
-    locationAbout.innerHTML = '';
+    locationAbout.innerHTML = `
+        <p class="big">${location.name}</p>
+        <div class="location__properties">
+            <div class="location__type">
+                <h4>Type</h4>
+                <p class="small">${location.type}</p>
+            </div>
+            <div class="location__dimension">
+                <h4>Dimension</h4>
+                <p class="small">${location.dimension}</p>
+            </div>
+        </div>
+    `;
+}
 
-    const locationContainer = document.querySelector('.location');
-    locationContainer.classList.add('location__properties');
-
-    // Создание и добавление элементов с информацией о локации
-    locationAbout.appendChild(createElementWithText('p', location.name, 'big'));
-    locationAbout.appendChild(createLocationProperties(location));
-
-    locationContainer.appendChild(locationAbout);
-
-    // Отображение жителей локации
+// Отображение персонажей
+function showCharacters(characters) {
+    charactersContainer.style.display = 'flex';
     characters.forEach(character => {
         const characterElement = createCharacterElement(character);
         charactersContainer.appendChild(characterElement);
     });
-
-    charactersContainer.style.display = 'flex';
-    locationContainer.appendChild(charactersContainer);
-}
-
-// Создание элемента с информацией о локации
-function createLocationProperties(location) {
-    const locationPropertiesDiv = createElementWithText('div', '', 'location__properties');
-    locationPropertiesDiv.appendChild(createPropertyElement('Type', location.type));
-    locationPropertiesDiv.appendChild(createPropertyElement('Dimension', location.dimension));
-    return locationPropertiesDiv;
-}
-
-// Создание элемента свойства локации
-function createPropertyElement(title, value) {
-    const propertyDiv = createElementWithText('div', '', `location__${title.toLowerCase()}`);
-    propertyDiv.appendChild(createElementWithText('h4', title));
-    propertyDiv.appendChild(createElementWithText('p', value, 'small'));
-    return propertyDiv;
 }
 
 // Создание элемента с информацией о персонаже
@@ -92,4 +81,10 @@ function createElementWithText(tag, textContent, className = '') {
     return element;
 }
 
+// Добавляем обработчик клика для кнопки goBack
+goBack.addEventListener('click', () => {
+    window.history.back();
+});
+
 window.onload = loadLocation;
+

@@ -64,7 +64,7 @@ function applyFilter() {
   const nameValue = filterInput.value.toLowerCase();
 
   let filteredEpisodes = episodes.filter(episode => {
-    return !nameValue || episode.name.toLowerCase().includes(nameValue);
+    return !nameValue || episode.name.toLowerCase().includes(nameValue) || episode.episode.toLowerCase().includes(nameValue);
   });
 
   episodesContainer.innerHTML = '';

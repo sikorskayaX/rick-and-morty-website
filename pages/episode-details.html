@@ -11,21 +11,21 @@
         <nav class="navigation">
             <a href="../pages/characters.html"><img src="../images/logo-black.png" alt="logo" class="navigation__logo"></a>
             <ul class="navigation__list">
-                <li class="navigation__item"><a href="../pages/characters.html">Characters</a></li>
-                <li class="navigation__item"><a href="../pages/locations.html">Locations</a></li>
-                <li class="navigation__item"><a href="../pages/episodes.html">Episodes</a></li>
+                <li><a class="navigation__link" href="../pages/characters.html">Characters</a></li>
+                <li><a class="navigation__link" href="../pages/locations.html">Locations</a></li>
+                <li><a class="navigation__link" href="../pages/episodes.html">Episodes</a></li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="episode">
             <div class="character__head">
-                <a href="../pages/episodes.html" class="character__go-back">
+                <div class="character__go-back" id="back">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M20 11H7.83L13.42 5.41L12 4L4 12L12 20L13.41 18.59L7.83 13H20V11Z" fill="black"/>
                     </svg>
                     <h3>GO BACK</h3>
-            </a>
+                </div>
             <div class="episode__about" id="episode__about">
                 <p class="big">Pilot</p>
                 <div class="episode__properties">
@@ -42,7 +42,7 @@
 
             </div>
         </div>
-        <h6>Cast</h6>
+        <h6 class="main__title">Cast</h6>
         <div class="characters" id="characters">
             <a href="../pages/character-details.html" class="characters__container" id="characters__container">
                 <img src="../images/rick.png" alt="Rick Sanchez" class="characters__image">

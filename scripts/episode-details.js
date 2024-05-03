@@ -1,6 +1,8 @@
 ﻿const selectedEpisodeId = localStorage.getItem('selectedEpisodeId');
 const charactersContainer = document.getElementById('characters');
 charactersContainer.innerHTML = '';
+const goBack = document.getElementById('back');
+let characters = [];
 
 // Загрузка информации об эпизоде
 async function loadEpisode() {
@@ -29,6 +31,7 @@ async function loadCharacters(characterURLs) {
 // Отображение информации об эпизоде
 function showEpisodeDetails(episode) {
     const episodeAbout = document.getElementById('episode__about');
+    episodeAbout.classList.add('episode__about');
     episodeAbout.innerHTML = `
         <p class="big">${episode.name}</p>
         <div class="episode__properties">
@@ -77,6 +80,11 @@ function createElementWithText(tag, textContent, className = '') {
     }
     return element;
 }
+
+// Добавляем обработчик клика для кнопки goBack
+goBack.addEventListener('click', () => {
+    window.history.back();
+});
 
 window.onload = loadEpisode;
 

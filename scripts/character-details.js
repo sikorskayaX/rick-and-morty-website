@@ -1,6 +1,6 @@
 ﻿const characterMain = document.getElementById('character__main');
 const selectedCharacterId = localStorage.getItem('selectedCharacterId');
-
+const goBack = document.getElementById('back');
 
 // Загрузка персонажа по переданному в local storage id
 async function loadCharacter() {
@@ -120,5 +120,10 @@ function handleEpisodeClick(episodeId) {
     localStorage.setItem('selectedEpisodeId', episodeId);
     window.location.href = "../pages/episode-details.html";
 }
+
+// Добавляем обработчик клика для кнопки goBack
+goBack.addEventListener('click', () => {
+    window.history.back();
+});
 
 window.onload = loadCharacter;
