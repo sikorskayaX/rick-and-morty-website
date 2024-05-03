@@ -8,7 +8,7 @@ const filterInput = document.getElementById('filter-name');
 const filterSelectType = document.getElementById('type-select');
 const filterSelectDimension = document.getElementById('dimension-select');
 
-// Load locations from all pages using async/await
+// Загружаем локации со всех страниц
 async function loadLocations(page = 1) {
   try {
     const response = await axios.get(`https://rickandmortyapi.com/api/location?page=${page}`);
@@ -26,9 +26,9 @@ async function loadLocations(page = 1) {
   }
 }
 
-// Display locations on the page
+// Выводим локации на страницу
 function showLocations(locationsToShow) {
-  const slicedLocations = locationsToShow.slice(currentCount, currentCount + 12);
+  const slicedLocations = locationsToShow.slice(currentCount, currentCount + 12); // отображение по 12 штук
   slicedLocations.forEach(location => {
     locationsContainer.appendChild(createLocationElement(location));
     locationsContainer.style.display = 'flex';
@@ -36,6 +36,8 @@ function showLocations(locationsToShow) {
   currentCount += 12;
 }
 
+
+// Выводим персонажей на страницу (когда применены фильтры)
 function showFilteredLocations(locationsToShow) {
   locationsToShow.forEach(location => {
     locationsContainer.appendChild(createLocationElement(location));
@@ -44,7 +46,7 @@ function showFilteredLocations(locationsToShow) {
   loadButton.style.display = 'none';
 }
 
-// Create a location element
+// Создаем элемент локации
 function createLocationElement(location) {
   const locationElement = document.createElement('a');
   locationElement.classList.add('locations__container');
@@ -59,7 +61,7 @@ function createLocationElement(location) {
   return locationElement;
 }
 
-// Function to apply all filters
+// Функция для применения всех фильтров
 function applyFilters() {
   const nameValue = filterInput.value.toLowerCase();
   const typeValue = filterSelectType.value;
@@ -75,11 +77,11 @@ function applyFilters() {
   showFilteredLocations(filteredLocations);
 }
 
-// Event handlers
+// Обработчики событий
 window.onload = () => loadLocations(1);
 loadButton.addEventListener('click', () => showLocations(locations));
 
-// For filters
+// Обработчики событий для фильтров
 [filterSelectType, filterSelectDimension].forEach(filter => {
   filter.addEventListener('change', applyFilters);
 });

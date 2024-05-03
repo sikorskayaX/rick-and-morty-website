@@ -29,7 +29,7 @@ async function loadCharacters(page = 1) {
 
 // Выводим персонажей на страницу
 function showCharacters(charactersToShow) {
-    const slicedCharacters = charactersToShow.slice(currentCount, currentCount + 8);
+    const slicedCharacters = charactersToShow.slice(currentCount, currentCount + 8); // отображение по 8 штук
     slicedCharacters.forEach(character => {
         charactersContainer.appendChild(createCharacterElement(character));
         charactersContainer.style.display = 'flex';

@@ -6,7 +6,7 @@ let episodes = [];
 
 const filterInput = document.getElementById('filter-name');
 
-// Load episodes from all pages
+// Загружаем эпизоды со всех страниц
 async function loadEpisodes(page = 1) {
   try {
     const response = await axios.get(`https://rickandmortyapi.com/api/episode?page=${page}`);
@@ -24,7 +24,7 @@ async function loadEpisodes(page = 1) {
   }
 }
 
-// Display episodes on the page
+// Выводим эпизоды на страницу
 function showEpisodes(episodesToShow) {
   const slicedEpisodes = episodesToShow.slice(currentCount, currentCount + 12);
   slicedEpisodes.forEach(episode => {
@@ -34,6 +34,7 @@ function showEpisodes(episodesToShow) {
   currentCount += 12;
 }
 
+// Выводим персонажей на страницу (когда применены фильтры)
 function showFilteredEpisodes(episodesToShow) {
   episodesToShow.forEach(episode => {
     episodesContainer.appendChild(createEpisodeElement(episode));
@@ -58,7 +59,7 @@ function createEpisodeElement(episode) {
   return episodeElement;
 }
 
-// Function to apply filter
+// Создаем элемент эпизода
 function applyFilter() {
   const nameValue = filterInput.value.toLowerCase();
 
@@ -70,7 +71,7 @@ function applyFilter() {
   showFilteredEpisodes(filteredEpisodes);
 }
 
-// Event handlers
+// Обработчики событий
 window.onload = () => loadEpisodes(1);
 loadButton.addEventListener('click', () => showEpisodes(episodes));
 filterInput.addEventListener('input', applyFilter);

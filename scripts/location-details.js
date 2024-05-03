@@ -3,121 +3,93 @@ const charactersContainer = document.getElementById('characters');
 charactersContainer.innerHTML = ''; 
 let characters = [];
 
-function loadLocation() {
-    axios.get(`https://rickandmortyapi.com/api/location/${selectedLocationId}`)
-    .then(function (response) {
+// Загрузка информации о локации
+async function loadLocation() {
+    try {
+        const response = await axios.get(`https://rickandmortyapi.com/api/location/${selectedLocationId}`);
         const location = response.data;
-        loadResidents(location)
-    })
-    .catch(function (error) {
+        await loadResidents(location);
+    } catch (error) {
         console.error(error);
-    });  
-}   
-
-function loadResidents(location) {
-    // Create an array to hold all the location promises
-    const residentPromises = location.residents.map(residentAPI => 
-       axios.get(residentAPI)
-   );
-
-    // Use Promise.all to wait for all the location promises to resolve
-    Promise.all(residentPromises)
-        .then(function (responses) {
-            // Map the responses to get the data for each location
-            characters = responses.map(response => response.data);
-            showLocation(location, characters);
-            console.log(characters)
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
+    }
 }
 
-function showLocation(location, characters){
-    console.log(location)
-    // Create the main container for the location about section
+// Загрузка жителей локации
+async function loadResidents(location) {
+    try {
+        const residentPromises = location.residents.map(residentAPI => axios.get(residentAPI));
+        const responses = await Promise.all(residentPromises);
+        characters = responses.map(response => response.data);
+        showLocation(location, characters);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Отображение информации о локации и ее жителях
+function showLocation(location, characters) {
     const locationAbout = document.getElementById('location__about');
     locationAbout.classList.add('location__about');
     locationAbout.innerHTML = '';
 
-    // Get the location div
     const locationContainer = document.querySelector('.location');
     locationContainer.classList.add('location__properties');
 
+    // Создание и добавление элементов с информацией о локации
+    locationAbout.appendChild(createElementWithText('p', location.name, 'big'));
+    locationAbout.appendChild(createLocationProperties(location));
 
-    // Create the "Earth (Replacement Dimension)" paragraph
-    const locationNameParagraph = document.createElement('p');
-    locationNameParagraph.classList.add('big');
-    locationNameParagraph.textContent = location.name;
-
-    // Create the location__properties div
-    const locationPropertiesDiv = document.createElement('div');
-    locationPropertiesDiv.classList.add('location__properties');
-
-    // Create the location__type div
-    const locationTypeDiv = document.createElement('div');
-    locationTypeDiv.classList.add('location__type');
-
-    // Create the location__type h4 and p elements
-    const locationTypeTitle = document.createElement('h4');
-    locationTypeTitle.textContent = 'Type';
-    const locationTypeValue = document.createElement('p');
-    locationTypeValue.classList.add('small');
-    locationTypeValue.textContent = location.type;
-
-    // Append the location__type elements
-    locationTypeDiv.appendChild(locationTypeTitle);
-    locationTypeDiv.appendChild(locationTypeValue);
-
-    // Create the location__dimension div
-    const locationDimensionDiv = document.createElement('div');
-    locationDimensionDiv.classList.add('location__dimension');
-
-    // Create the location__dimension h4 and p elements
-    const locationDimensionTitle = document.createElement('h4');
-    locationDimensionTitle.textContent = 'Dimension';
-    const locationDimensionValue = document.createElement('p');
-    locationDimensionValue.classList.add('small');
-    locationDimensionValue.textContent = location.dimension;
-
-    // Append the location__dimension elements
-    locationDimensionDiv.appendChild(locationDimensionTitle);
-    locationDimensionDiv.appendChild(locationDimensionValue);
-
-    // Append the location__type and location__dimension divs to the location__properties div
-    locationPropertiesDiv.appendChild(locationTypeDiv);
-    locationPropertiesDiv.appendChild(locationDimensionDiv);
-
-    // Append the location__name paragraph and location__properties div to the location__about div
-    locationAbout.appendChild(locationNameParagraph);
-    locationAbout.appendChild(locationPropertiesDiv);
-
-    // Append the location__about div to the location div
     locationContainer.appendChild(locationAbout);
 
-
-
+    // Отображение жителей локации
     characters.forEach(character => {
-        const characterElement = document.createElement('a');
-        characterElement.classList.add('characters__container');
-        characterElement.href = "../pages/character-details.html";
-        characterElement.innerHTML = `
-            <img class="characters__image" src="${character.image}" alt="${character.name}">
-            <h6 class="characters__name">${character.name}</h6>
-            <p class="characters__species regular">Вид: ${character.species}</p>
-        `;
+        const characterElement = createCharacterElement(character);
         charactersContainer.appendChild(characterElement);
-        charactersContainer.style.display = 'flex';
-        characterElement.addEventListener('click', () => {
-          localStorage.setItem('selectedCharacterId', character.id);
-      });
     });
 
+    charactersContainer.style.display = 'flex';
     locationContainer.appendChild(charactersContainer);
-
-
 }
 
+// Создание элемента с информацией о локации
+function createLocationProperties(location) {
+    const locationPropertiesDiv = createElementWithText('div', '', 'location__properties');
+    locationPropertiesDiv.appendChild(createPropertyElement('Type', location.type));
+    locationPropertiesDiv.appendChild(createPropertyElement('Dimension', location.dimension));
+    return locationPropertiesDiv;
+}
 
+// Создание элемента свойства локации
+function createPropertyElement(title, value) {
+    const propertyDiv = createElementWithText('div', '', `location__${title.toLowerCase()}`);
+    propertyDiv.appendChild(createElementWithText('h4', title));
+    propertyDiv.appendChild(createElementWithText('p', value, 'small'));
+    return propertyDiv;
+}
 
-window.onload = loadLocation();
+// Создание элемента с информацией о персонаже
+function createCharacterElement(character) {
+    const characterElement = createElementWithText('a', '', 'characters__container');
+    characterElement.href = "../pages/character-details.html";
+    characterElement.innerHTML = `
+        <img class="characters__image" src="${character.image}" alt="${character.name}">
+        <h6 class="characters__name">${character.name}</h6>
+        <p class="characters__species regular">Вид: ${character.species}</p>
+    `;
+    characterElement.addEventListener('click', () => {
+        localStorage.setItem('selectedCharacterId', character.id);
+    });
+    return characterElement;
+}
+
+// Создание элемента с текстом
+function createElementWithText(tag, textContent, className = '') {
+    const element = document.createElement(tag);
+    element.textContent = textContent;
+    if (className) {
+        element.classList.add(className);
+    }
+    return element;
+}
+
+window.onload = loadLocation;

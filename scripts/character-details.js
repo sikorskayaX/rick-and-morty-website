@@ -1,38 +1,28 @@
 ﻿const characterMain = document.getElementById('character__main');
 const selectedCharacterId = localStorage.getItem('selectedCharacterId');
-let episodes = [];
 
-function loadCharacter() {
-    axios.get(`https://rickandmortyapi.com/api/character/${selectedCharacterId}`)
-    .then(function (response) {
+
+// Загрузка персонажа по переданному в local storage id
+async function loadCharacter() {
+    try {
+        const response = await axios.get(`https://rickandmortyapi.com/api/character/${selectedCharacterId}`);
         const character = response.data;
-        loadEpisode(character);
-    })
-    .catch(function (error) {
+        const episodes = await loadEpisodes(character.episode);
+        showCharacter(character, episodes);
+    } catch (error) {
         console.error(error);
-    });  
-}    
+    }
+}
 
-function loadEpisode(character) {
-     // Create an array to hold all the episode promises
-     const episodePromises = character.episode.map(episodeAPI => 
-        axios.get(episodeAPI)
-    );
- 
-     // Use Promise.all to wait for all the episode promises to resolve
-     Promise.all(episodePromises)
-         .then(function (responses) {
-             // Map the responses to get the data for each episode
-             const episodes = responses.map(response => response.data);
-             showCharacter(character, episodes);
-         })
-         .catch(function (error) {
-             console.error(error);
-         });
- }
-  
+// Загрузка эпизодов, в которых присутствует персонаж
+async function loadEpisodes(episodeUrls) {
+    const episodePromises = episodeUrls.map(url => axios.get(url));
+    const responses = await Promise.all(episodePromises);
+    return responses.map(response => response.data);
+}
 
-function createElementWithText(tag, textContent, className) {
+// Создание элемента в поле информации
+function createElementWithText(tag, textContent, className = '') {
     const element = document.createElement(tag);
     element.textContent = textContent;
     if (className) {
@@ -41,6 +31,15 @@ function createElementWithText(tag, textContent, className) {
     return element;
 }
 
+
+// Создание элемента в поле информации по которому можно перейти
+function createClickableElement(tag, textContent, className, onClick) {
+    const element = createElementWithText(tag, textContent, className);
+    element.addEventListener('click', onClick);
+    return element;
+}
+
+// Отображение персонажа
 function showCharacter(character, episodes) {
     characterMain.innerHTML = '';
 
@@ -51,85 +50,75 @@ function showCharacter(character, episodes) {
     `;
     characterMain.appendChild(characterPropertiesHead);
 
+    const characterProperties = createElementWithText('div', '', 'character__properties');
+    characterProperties.appendChild(createCharacterInformationSection(character));
+    characterProperties.appendChild(createCharacterEpisodesSection(episodes));
+    characterMain.appendChild(characterProperties);
+}
 
-    const characterEpisodes = createElementWithText('div', '', 'character__episodes');
-    const characterEpisodesTitle = createElementWithText('h2', 'Episodes');
-    characterEpisodes.appendChild(characterEpisodesTitle);
-
+// Создание раздела с информацией о персонаже
+function createCharacterInformationSection(character) {
     const characterInformations = createElementWithText('div', '', 'character__informations');
-    const characterInformationsTitle = createElementWithText('h2', 'Informations');
-    characterInformations.appendChild(characterInformationsTitle);
-
+    characterInformations.innerHTML = `<h2>Informations</h2>`;
 
     const properties = [
         { label: 'Gender', value: character.gender },
         { label: 'Status', value: character.status },
         { label: 'Species', value: character.species },
-        { label: 'Type', value: character.type ? character.type.name : 'Unknown' }, 
+        { label: 'Type', value: character.type || 'Unknown' },
     ];
 
     properties.forEach(prop => {
-        const propertyTitle = createElementWithText('h3', prop.label);
-        const propertyValue = createElementWithText('p', prop.value);
-        characterInformations.appendChild(propertyTitle);
-        characterInformations.appendChild(propertyValue);
+        characterInformations.appendChild(createElementWithText('h3', prop.label));
+        characterInformations.appendChild(createElementWithText('p', prop.value));
     });
 
-    const characterLocationTitle = createElementWithText('h3', 'Location');
-    characterInformations.appendChild(characterLocationTitle);
+    // Кликабельный элемент location 
+    characterInformations.appendChild(createElementWithText('h3', 'Location'));
+    characterInformations.appendChild(createClickableElement('div', character.location.name, 'character__episode', () => handleLocationClick(character.location.url)));
 
-    const characterLocation = createElementWithText('div', '', 'character__episode');
-    characterLocation.textContent = character.location.name;
-    characterInformations.appendChild(characterLocation);
+    // Кликабельный элемент origin 
+    characterInformations.appendChild(createElementWithText('h3', 'Origin'));
+    characterInformations.appendChild(createClickableElement('div', character.origin.name, 'character__episode', () => handleLocationClick(character.origin.url)));
 
-    characterLocation.addEventListener('click', () => {
-        const locationID = character.location.url.match(/\d+/);
-        console.log(locationID);
-        if(locationID){
-            localStorage.setItem('selectedLocationId', parseInt(locationID));
-            window.location.href = "../pages/location-details.html";
-        }
-        else alert('Unknown location');
-    });
+    return characterInformations;
+}
 
-    const characterOriginTitle = createElementWithText('h3', 'Origin');
-    characterInformations.appendChild(characterOriginTitle);
-
-    const characterOrigin = createElementWithText('div', '', 'character__episode');
-    characterOrigin.textContent = character.origin.name;
-    characterInformations.appendChild(characterOrigin);
-
-    characterOrigin.addEventListener('click', () => {
-        const originID = character.origin.url.match(/\d+/);
-        console.log(originID);
-        if(originID){
-            localStorage.setItem('selectedLocationId', parseInt(originID));
-            window.location.href = "../pages/location-details.html";
-        }
-        else alert('Unknown origin');
-    });
-
+// Создание раздела с эпизодами, в которых есть персонаж
+function createCharacterEpisodesSection(episodes) {
+    const characterEpisodes = createElementWithText('div', '', 'character__episodes');
+    characterEpisodes.innerHTML = `<h2>Episodes</h2>`;
 
     episodes.forEach(episode => {
-        const characterEpisode = createElementWithText('div', '', 'character__episode');
-        characterEpisode.innerHTML = `
-        <p class="bold">${episode.episode}</p>
-        <p class="small">${episode.name}</p>
-        <p class="little">${episode.air_date}</p>
+        const episodeElement = createElementWithText('div', '', 'character__episode');
+        episodeElement.innerHTML = `
+            <p class="bold">${episode.episode}</p>
+            <p class="small">${episode.name}</p>
+            <p class="little">${episode.air_date}</p>
         `;
-        characterEpisodes.appendChild(characterEpisode);
-
-        characterEpisode.addEventListener('click', () => {
-            localStorage.setItem('selectedEpisodeId', episode.id);
-            window.location.href = "../pages/episode-details.html";
-            console.log(episode.id)
-        });
+        episodeElement.addEventListener('click', () => handleEpisodeClick(episode.id));
+        characterEpisodes.appendChild(episodeElement);
     });
 
-    const characterProperties = createElementWithText('div', '', 'character__properties');
-    characterProperties.appendChild(characterInformations);
-    characterProperties.appendChild(characterEpisodes);
-    characterMain.appendChild(characterProperties);
+    return characterEpisodes;
+}
+
+// Запись id локации в local storage и добавление ссылки для локаций
+function handleLocationClick(url) {
+    const locationID = url.match(/\d+/);
+    if (locationID) {
+        localStorage.setItem('selectedLocationId', locationID[0]);
+        window.location.href = "../pages/location-details.html";
+    } else {
+        alert('Unknown location');
+    }
+}
+
+
+// Запись id локации в local storage и добавление ссылки для эпизодов
+function handleEpisodeClick(episodeId) {
+    localStorage.setItem('selectedEpisodeId', episodeId);
+    window.location.href = "../pages/episode-details.html";
 }
 
 window.onload = loadCharacter;
