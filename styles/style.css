@@ -129,15 +129,6 @@ a:visited {
     color: rgb(0, 0, 0);
 }
 
-
-/*
-input::placeholder{
-    background-image: url('../icons/search.svg');
-    background-repeat: no-repeat;
-    background-position: 0 center;
-}
-*/
-
 ::placeholder, select{
     font-family: Roboto;
     font-size: 16px;
@@ -157,6 +148,12 @@ header{
     height: auto;
     align-self: center;
     margin: 6% 0 2% 0;
+}
+
+@media only screen and (max-width: 360px){
+    .header__logo{
+        display: none;
+    }
 }
 
 /*nav*/
@@ -191,8 +188,22 @@ header{
 .navigation__link:active{
     color: rgb(104, 206, 81);
 }
-/*main*/
 
+
+@media only screen and (max-width: 360px){
+    .navigation{
+        padding: 3% 0;
+        position: static;
+        flex-direction: column;
+    }
+    .navigation__list{
+        margin: 2% 0;
+        height: 7rem;
+        flex-direction: column;
+    }
+}
+
+/*main*/
 main{
     display: flex;
     flex-direction: column;
@@ -244,6 +255,16 @@ main{
     background-image: url('../icons/select.svg');
     background-repeat: no-repeat;
     background-position: 13rem center;
+}
+
+@media only screen and (max-width: 360px){
+    .filters{
+        flex-direction: column;
+    }
+    .filters__name-character, .filters__name-location, .filters__name-episode,  .filters__select{
+        margin-top: 1rem;
+        width: 100%;
+    }
 }
 
 /*characters*/
@@ -356,12 +377,34 @@ main{
     background-color: rgba(0, 0, 0, 0.178);
 }
 
-/*locations*/
+
+@media only screen and (max-width: 360px){
+    .character__head{
+        margin-top: 1rem;
+    }
+
+    .character__image{
+        width: 80%;
+    }
+
+    .character__properties{
+        flex-direction: column;
+    }
+
+    .character__information, .character__episode{
+        width: auto;
+    }
+    .character__episodes{
+        margin-top: 2rem;
+    }
+}
+
+/*locations, episodes*/
 
 .locations, .episodes{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 .locations__container, .episodes__container{
@@ -380,12 +423,29 @@ main{
     background-color: rgba(250, 250, 250, 1);
 }
 
+/*location, episode*/
 
-.location__properties, .episodes__properties{
+.location, .episode{
     display: flex;
+    flex-direction: column;
 }
-/*button*/
 
+/*about*/
+.location__about, .episode__about{
+    padding: 1% 0;
+}
+
+.location__properties, .episode__properties{
+    padding: 5% 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.location__type, .location__dimension, .episode__number, .episode__date{
+    width: 50%;
+}
+
+/*button*/
 button{
     text-transform: uppercase;
     border: none;
@@ -402,30 +462,13 @@ button{
 }
 
 button:hover{
+    transform: scale(1.05);
     background: rgb(204, 234, 255);
 }
 
 button:active{
     background: rgb(249, 252, 255);
 }
-
-/*location*/
-.location, .episode{
-    display: flex;
-    flex-direction: column;
-}
-.location__about, .episode__about{
-    padding: 1% 0;
-}
-.location__properties, .episode__properties{
-    padding: 5% 0;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-
-
-
 
 /*footer*/
 
