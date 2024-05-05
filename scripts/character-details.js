@@ -57,9 +57,12 @@ function createCharacterInformationElement(label, value, elementClass, locationU
     characterInformationElement.appendChild(titleElement);
     characterInformationElement.appendChild(valueElement);
 
-    // Если есть информация о локации
-    if(locationUrl){
+    // Если есть информация о локации и она не "unknown"
+    if(locationUrl && value.toLowerCase() !== 'unknown'){
         characterInformationElement.addEventListener('click', () => handleLocationClick(locationUrl));
+    } else if (value.toLowerCase() === 'unknown') {
+        // Если имя "unknown", добавляем обработчик для alert
+        characterInformationElement.addEventListener('click', () => alert('Unknown location'));
     }
     return characterInformationElement;
 }
@@ -115,12 +118,8 @@ function createCharacterEpisodesSection(episodes) {
 // Запись id локации в local storage и добавление ссылки для локаций
 function handleLocationClick(url) {
     const locationID = url.match(/\d+/);
-    if (locationID) {
-        localStorage.setItem('selectedLocationId', locationID[0]);
-        window.location.href = "../pages/location-details.html";
-    } else {
-        alert('Unknown location');
-    }
+    localStorage.setItem('selectedLocationId', locationID[0]);
+    window.location.href = "../pages/location-details.html";
 }
 
 
