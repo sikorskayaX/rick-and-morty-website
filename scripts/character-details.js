@@ -31,14 +31,6 @@ function createElementWithText(tag, textContent, className = '') {
     return element;
 }
 
-
-// Создание элемента в поле информации по которому можно перейти
-function createClickableElement(tag, textContent, className, onClick) {
-    const element = createElementWithText(tag, textContent, className);
-    element.addEventListener('click', onClick);
-    return element;
-}
-
 // Отображение персонажа
 function showCharacter(character, episodes) {
     characterMain.innerHTML = '';
@@ -57,7 +49,7 @@ function showCharacter(character, episodes) {
 }
 
 // Создание элемента информации о персонаже
-function createCharacterInformationElement(label, value, elementClass) {
+function createCharacterInformationElement(label, value, elementClass, locationUrl) {
     const characterInformationElement = createElementWithText('div', '', elementClass);
     const titleElement = createElementWithText('h3', label, 'character__info-title');
     const valueElement = createElementWithText('p', value, 'small');
@@ -65,6 +57,10 @@ function createCharacterInformationElement(label, value, elementClass) {
     characterInformationElement.appendChild(titleElement);
     characterInformationElement.appendChild(valueElement);
 
+    // Если есть информация о локации
+    if(locationUrl){
+        characterInformationElement.addEventListener('click', () => handleLocationClick(locationUrl));
+    }
     return characterInformationElement;
 }
 
@@ -85,16 +81,10 @@ function createCharacterInformationSection(character) {
     });
 
     // Кликабельный элемент origin 
-    characterInformations.appendChild(createCharacterInformationElement('Origin', character.origin.name, 'character__information-clickable'));
-    const originClickable = characterInformations.lastChild.querySelector('p');
-    originClickable.classList.add('small');
-    originClickable.addEventListener('click', () => handleLocationClick(character.origin.url));
+    characterInformations.appendChild(createCharacterInformationElement('Origin', character.origin.name, 'character__information-clickable', character.origin.url));
 
     // Кликабельный элемент location 
-    characterInformations.appendChild(createCharacterInformationElement('Location', character.location.name, 'character__information-clickable'));
-    const locationClickable = characterInformations.lastChild.querySelector('p');
-    locationClickable.classList.add('small');
-    locationClickable.addEventListener('click', () => handleLocationClick(character.location.url));
+    characterInformations.appendChild(createCharacterInformationElement('Location', character.location.name, 'character__information-clickable', character.location.url));
 
     return characterInformations;
 }

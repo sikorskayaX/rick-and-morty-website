@@ -144,8 +144,8 @@ header{
 }
 
 .header__logo{
-    width: 42%;
-    height: auto;
+    width: auto;
+    height: 210px;
     align-self: center;
     margin: 6% 0 2% 0;
 }
@@ -436,7 +436,7 @@ main{
 .locations, .episodes{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .locations__container, .episodes__container{
