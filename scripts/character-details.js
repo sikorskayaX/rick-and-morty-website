@@ -56,10 +56,22 @@ function showCharacter(character, episodes) {
     characterMain.appendChild(characterProperties);
 }
 
+// Создание элемента информации о персонаже
+function createCharacterInformationElement(label, value, elementClass) {
+    const characterInformationElement = createElementWithText('div', '', elementClass);
+    const titleElement = createElementWithText('h3', label, 'character__info-title');
+    const valueElement = createElementWithText('p', value, 'small');
+
+    characterInformationElement.appendChild(titleElement);
+    characterInformationElement.appendChild(valueElement);
+
+    return characterInformationElement;
+}
+
 // Создание раздела с информацией о персонаже
 function createCharacterInformationSection(character) {
     const characterInformations = createElementWithText('div', '', 'character__informations');
-    characterInformations.innerHTML = `<h2>Informations</h2>`;
+    characterInformations.innerHTML = `<h2 class = "character__informations-title">Informations</h2>`;
 
     const properties = [
         { label: 'Gender', value: character.gender },
@@ -69,39 +81,46 @@ function createCharacterInformationSection(character) {
     ];
 
     properties.forEach(prop => {
-        characterInformations.appendChild(createElementWithText('h3', prop.label));
-        characterInformations.appendChild(createElementWithText('p', prop.value));
+        characterInformations.appendChild(createCharacterInformationElement(prop.label, prop.value, 'character__information'));
     });
 
-    // Кликабельный элемент location 
-    characterInformations.appendChild(createElementWithText('h3', 'Location'));
-    characterInformations.appendChild(createClickableElement('div', character.location.name, 'character__episode', () => handleLocationClick(character.location.url)));
-
     // Кликабельный элемент origin 
-    characterInformations.appendChild(createElementWithText('h3', 'Origin'));
-    characterInformations.appendChild(createClickableElement('div', character.origin.name, 'character__episode', () => handleLocationClick(character.origin.url)));
+    characterInformations.appendChild(createCharacterInformationElement('Origin', character.origin.name, 'character__information-clickable'));
+    const originClickable = characterInformations.lastChild.querySelector('p');
+    originClickable.classList.add('small');
+    originClickable.addEventListener('click', () => handleLocationClick(character.origin.url));
+
+    // Кликабельный элемент location 
+    characterInformations.appendChild(createCharacterInformationElement('Location', character.location.name, 'character__information-clickable'));
+    const locationClickable = characterInformations.lastChild.querySelector('p');
+    locationClickable.classList.add('small');
+    locationClickable.addEventListener('click', () => handleLocationClick(character.location.url));
 
     return characterInformations;
 }
 
+
 // Создание раздела с эпизодами, в которых есть персонаж
 function createCharacterEpisodesSection(episodes) {
     const characterEpisodes = createElementWithText('div', '', 'character__episodes');
-    characterEpisodes.innerHTML = `<h2>Episodes</h2>`;
+    const characterEpisodesContainer = createElementWithText('div', '', 'character__episodes-container');
+    characterEpisodes.innerHTML = `<h2 class = "character__informations-title">Episodes</h2>`;
 
     episodes.forEach(episode => {
         const episodeElement = createElementWithText('div', '', 'character__episode');
         episodeElement.innerHTML = `
-            <p class="bold">${episode.episode}</p>
+            <h3 class="character__info-title">${episode.episode}</h3>
             <p class="small">${episode.name}</p>
             <p class="little">${episode.air_date}</p>
         `;
         episodeElement.addEventListener('click', () => handleEpisodeClick(episode.id));
-        characterEpisodes.appendChild(episodeElement);
+        characterEpisodesContainer.appendChild(episodeElement);
     });
 
+    characterEpisodes.appendChild(characterEpisodesContainer);
     return characterEpisodes;
 }
+
 
 // Запись id локации в local storage и добавление ссылки для локаций
 function handleLocationClick(url) {

@@ -117,7 +117,7 @@ a{
     font-family: Karla;
     font-size: 1.125rem;
     font-weight: 700;
-    text-align: center;
+    text-align: left;
 }
 
 a:link {
@@ -191,6 +191,9 @@ header{
 
 
 @media only screen and (max-width: 360px){
+    h1{
+        font-size: 30px;
+    }
     .navigation{
         padding: 3% 0;
         position: static;
@@ -357,23 +360,47 @@ main{
     margin: 0 2%;
 }
 
-.character__informations h2, .character__episodes h2{
-    margin-bottom: 5%;
+.character__episodes-container{
+    max-height: 23.5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: 0.5rem;
 }
 
-.character__information, .character__episode{
-    padding: 2% 3%;
+
+.character__info-title{
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.15000000596046448px;
+    text-align: left;
+
+}
+
+.character__informations-title{
+    margin-bottom: 2rem;
+}
+
+
+.character__episode, .character__information, .character__information-clickable{
+    padding: 1rem 0 1rem 1rem;
     border-bottom: solid 1px rgba(33, 33, 33, 0.08);
     width: 25rem;
 }
 
+.character__episode, .character__information-clickable{
+    background-image: url('../icons/chevron_right_24px.svg');
+    background-repeat: no-repeat;
+    background-position: right center; 
+}
 
-.character__episode:hover{
+.character__episode:hover, .character__information-clickable:hover{
     background-color: rgba(0, 0, 0, 0.055);
 }
 
 
-.character__episode:active{
+.character__episode:active, .character__information-clickable:active{
     background-color: rgba(0, 0, 0, 0.178);
 }
 
@@ -391,11 +418,16 @@ main{
         flex-direction: column;
     }
 
-    .character__information, .character__episode{
+    .character__episode, .character__information, .character__information-clickable{
         width: auto;
     }
-    .character__episodes{
+
+    .character__episodes, .character__informations{
         margin-top: 2rem;
+    }
+
+    .character__informations-title{
+        margin-bottom: 1rem;
     }
 }
 
@@ -478,3 +510,20 @@ footer{
     box-shadow: -2px 0px 8px 2px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+
+/* scroll */
+::-webkit-scrollbar {
+    width: 0.5rem; 
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.01); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(173, 173, 173, 0.904);; 
+    border-radius: 0.5rem; 
+}
+
+
