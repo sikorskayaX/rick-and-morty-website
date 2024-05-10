@@ -63,7 +63,7 @@ function createCharacterElement(character) {
     characterElement.innerHTML = `
         <img class="characters__image" src="${character.image}" alt="${character.name}">
         <h6 class="characters__name">${character.name}</h6>
-        <p class="characters__species regular">Вид: ${character.species}</p>
+        <p class="characters__species regular">${character.species}</p>
     `;
     characterElement.addEventListener('click', () => {
         localStorage.setItem('selectedCharacterId', character.id);
